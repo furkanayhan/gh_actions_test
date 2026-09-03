@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "optparse"
+require_relative "../lib/greeter"
+
+options = { shout: false }
+
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: greet [NAME] [options]"
+
+  opts.on("-s", "--shout", "Shout the greeting") do
+    options[:shout] = true
+  end
+
+  opts.on("-v", "--version", "Print version") do
+    puts Greeter::VERSION
+    exit
+  end
+
+  opts.on("-h", "--help", "Show this help") do
+    puts opts
+    exit
+  end
+end
+
+parser.parse!(ARGV)
+
+name = ARGV.shift
+puts Greeter.greet(name, shout: options[:shout])
